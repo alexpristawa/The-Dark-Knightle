@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');  /*  font-family: 'Kalam', cursive;  */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap'); /*  font-family: 'Noto Sans Mono', monospace; */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap'); /*  font-family: 'Noto Serif', serif;  */
+        @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap'); /*  font-family: 'Nunito', sans-serif;  */
+        @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap'); /*  font-family: 'Parisienne', cursive;  */
+    </style>
+    <title>The Dark Knightle</title>
+</head>
+<body>
+    <div id = 'movieHolder'>
+        <h2>Movies</h2>
+        <div id = 'movieList'>
+        </div>
+    </div>
+    <div id = 'otherSide'>
+        <div id = 'extraSpace'>
+            <div id = 'trophyButton' onclick = 'profile()'>
+                <i class="fas fa-trophy"></i>
+            </div>
+        </div>
+        <div id = 'quoteHolder'>
+            <h4 id = 'textAbove4'></h4>
+            <h4 id = 'quote'></h4>
+        </div>
+        <div id = 'answerHolder'>
+            <input type="text" placeholder="Next line here" id = 'answerTextbox'>
+        </div>
+        <div id = 'submitButtonHolder'>
+            <div id = 'submitButton' onclick = 'submit()' data-enabled="true">
+                <h5>Submit</h5>
+            </div>
+        </div>
+    </div>
+
+    <div id = 'trophyDiv' class = 'shrink'>
+        <div id = 'profileDiv'>
+            <div id = 'profilePictureHolder'>
+                <img id = 'profilePicture'>
+            </div>
+            <input type = 'text' placeholder = 'Name' id = 'nameTextbox' class = 'nameTextbox'>
+            <input type = 'text' placeholder = 'Username' id = 'usernameTextbox' class = 'nameTextbox'>
+            <textarea rows = 4 id = 'descriptionTextarea' placeholder = 'Description'></textarea>
+        </div>
+        <div id = 'statsDiv'>
+            <h2>Stats</h2>
+            <div>
+                <h5>Movie: </h5><select id = 'movieStatsDropdown'></select>
+            </div>
+            <div id = gamemodeDropdownHolder>
+                <h5>Gamemode: </h5><select id = 'gamemodeDropdown'>      
+                    <option value = "All">All</option>
+                    <option value = "Normal">Normal</option>
+                    <option value = "Quiz">Quiz</option>
+                    <option value = "Endless">Endless</option>
+                </select>
+            </div>
+
+            <h5 id = 'quotesPlayed'></h5>
+            <h5 id = 'quotesWon'></h5>
+            <h5 id = 'quotesAccuracy'></h5>
+            <button id = 'resetStats' class = 'gamemodeButtons' onclick = 'resetStats()'>Reset Stats</button>
+        </div>
+        <div id = 'gamesDiv'>
+            <h2>Gamemodes</h2>
+            <button id = 'normalButton' class = 'gamemodeButtons' onclick = 'promptForSave("normal"); profile(true)'>Normal</button>
+            <button id = 'quizButton' class = 'gamemodeButtons' onclick = 'promptForSave("quiz"); profile(true)'>Quiz</button>
+            <button id = 'endlessButton' class = 'gamemodeButtons' onclick = 'promptForSave("endless"); profile(true)'>Endless</button>
+        </div>
+        <button class = 'xButtons' onclick = 'profile()'>&times;</button>
+    </div>
+    <div id = 'resultsHolder' class = 'shrink'>
+        <h4 id = 'resultsTitle'>Quiz complete!</h4>
+        <h4 id = 'newRecord'></h4>
+        <h5 class = 'resultsText'></h5>
+        <h5 class = 'resultsText'></h5>
+        <h5 class = 'resultsText'></h5>
+        <button class = 'xButtons' onclick = 'displayQuizResults()'>&times;</button>
+    </div>
+    <div id = 'finishDiv'>
+        <div class = 'message'>
+            <div>
+                <h3>Would you like to go back and finish your current game? (If not, it counts against your stats)</h3>
+            </div>
+        </div>
+        <div class = 'yesOrNo'>
+            <div>
+                <h3>No</h3>
+            </div>
+            <div>
+                <h3>Yes</h3>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <script src='script.js'></script>
+    <script src='Scripts/eventListeners.js'></script>
+    <script src="Scripts/formatFunctions.js"></script>
+    <script src="Scripts/animationFunctions.js"></script>
+    <script src="Classes/confetti.js"></script>
+</body>
+</html>
