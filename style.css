@@ -485,3 +485,9 @@ h2 {
 #finishDiv > .yesOrNo > div:hover {
     background-color: rgba(50, 50, 50, 1);
 }
+
+.popups {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    box-shadow: 0 0 3vh rgba(0,0,0,0.3);
+}
