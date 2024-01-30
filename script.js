@@ -225,6 +225,20 @@ let submit = (movie = currentMovie) => {
 
 answerTextbox.addEventListener('keydown', (event) => {
     if(event.key == "Enter") {
+        let popups = document.querySelectorAll('.popups');
+        popups.forEach(div => {
+            if(div.id == 'resultsHolder') {
+                if(!div.classList.contains('shrink')) {
+                    displayQuizResults();
+                }
+            } else if(div.id == 'finishDiv') {
+                document.dispatchEvent(new Event("closePromptForSave"));
+            } else if(div.id == 'trophyDiv') {
+                if(!div.classList.contains('shrink')) {
+                    profile();
+                }
+            }
+        });
         submit(currentMovie);
     }
 });
@@ -601,30 +615,48 @@ let displayEndlessResults = () => {
 }
 
 let promptForSave = (mode, movie = currentMovie) => {
-    if(movie != undefined) {
-        if(!scoreSaved) {
-            finishDiv.style.display = 'flex';
-            finishDiv.style.opacity = 0;
-            setTimeout(() => {
-                finishDiv.fadeIn(300);
-            });
-            document.querySelector('#finishDiv > .yesOrNo > div:nth-child(1)').addEventListener('click', () => {
-                finishDiv.fadeOut(300, false);
-                gamemode = mode;
-                goingBack = false;
-                newQuote(movie);
-            });
-            document.querySelector('#finishDiv > .yesOrNo > div:nth-child(2)').addEventListener('click', () => {
-                finishDiv.fadeOut(300, false);
-                goingBack = true;
-                nextGame = {
-                    gamemode: mode,
-                    movie: movie
+    if(finishDiv.dataset.active == 'false') {
+        if(movie != undefined) {
+            if(!scoreSaved) {
+                finishDiv.style.display = 'flex';
+                finishDiv.style.opacity = 0;
+                setTimeout(() => {
+                    finishDiv.fadeIn(300);
+                });
+                let yesHandler = () => {
+                    finishDiv.fadeOut(300, false);
+                    gamemode = mode;
+                    goingBack = false;
+                    newQuote(movie);
+                    document.querySelector('#finishDiv > .yesOrNo > div:nth-child(1)').removeEventListener('click', yesHandler);
+                    document.querySelector('#finishDiv > .yesOrNo > div:nth-child(2)').removeEventListener('click', noHandler);
+                    document.removeEventListener('closePromptForSave', yesHandler);
                 }
-            });
-        } else {
-            gamemode = mode;
-            newQuote(currentMovie);
+                let noHandler = () => {
+                    finishDiv.fadeOut(300, false);
+                    goingBack = true;
+                    nextGame = {
+                        gamemode: mode,
+                        movie: movie
+                    }
+                    document.querySelector('#finishDiv > .yesOrNo > div:nth-child(1)').removeEventListener('click', yesHandler);
+                    document.querySelector('#finishDiv > .yesOrNo > div:nth-child(2)').removeEventListener('click', noHandler);
+                    document.removeEventListener('closePromptForSave', yesHandler);
+                }
+                document.querySelector('#finishDiv > .yesOrNo > div:nth-child(1)').addEventListener('click', yesHandler);
+                document.querySelector('#finishDiv > .yesOrNo > div:nth-child(2)').addEventListener('click', noHandler);
+                document.addEventListener('closePromptForSave', yesHandler);
+            } else {
+                gamemode = mode;
+                newQuote(currentMovie);
+            }
         }
+    } else {
+        finishDiv.fadeOut(300, false);
+        gamemode = mode;
+        goingBack = false;
+        newQuote(movie);
+        document.querySelector('#finishDiv > .yesOrNo > div:nth-child(1)').removeEventListener('click', yesHandler);
+        document.querySelector('#finishDiv > .yesOrNo > div:nth-child(2)').removeEventListener('click', noHandler);
     }
 }
