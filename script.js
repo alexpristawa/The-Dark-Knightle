@@ -223,7 +223,7 @@ let submit = (movie = currentMovie) => {
     }
 }
 
-answerTextbox.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', (event) => {
     if(event.key == "Enter") {
         let popups = document.querySelectorAll('.popups');
         popups.forEach(div => {
@@ -239,7 +239,9 @@ answerTextbox.addEventListener('keydown', (event) => {
                 }
             }
         });
-        submit(currentMovie);
+        if(event.target == answerTextbox) {
+            submit(currentMovie);
+        }
     }
 });
 
