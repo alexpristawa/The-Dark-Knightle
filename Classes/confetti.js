@@ -57,6 +57,8 @@ let confettiExplosion = (x, y, amount, length) => {
         let confettiStartingTime = Date.now();
         let confettiPreviousTime = Date.now();
         confettiIntervalRunning = true;
+        let windowWidth = window.innerWidth;
+        let windowHeight = window.innerHeight;
         let interval = setInterval(() => {
             let deltaTime = Date.now() - confettiPreviousTime;
             let deltaFrames = 1000/deltaTime;
@@ -68,6 +70,7 @@ let confettiExplosion = (x, y, amount, length) => {
             for(let i = 0; i < instances.length; i++) {
                 instances[i].x += instances[i].hv;
                 instances[i].vv -= gravity/deltaFrames;
+                console.log(deltaFrames);
                 if(-instances[i].vv > terminalVelocity) {
                     instances[i].vv = -terminalVelocity;
                 }
@@ -77,8 +80,10 @@ let confettiExplosion = (x, y, amount, length) => {
                 instances[i].angleZ += instances[i].angleChangeZ/deltaFrames;
                 instances[i].remainingLength -= deltaTime;
                 instances[i].updateProperties();
-                if(instances[i].x < -50 || instances[i].x > window.innerWidth + 50 || instances[i].y < -50 || instances[i].y > window.innerHeight + 50 || instances[i].remainingLength < 0) {
+                if(instances[i].x < -50 || instances[i].x > windowWidth + 50 || instances[i].y < -50 || instances[i].y > windowHeight + 50 || instances[i].remainingLength < 0) {
                     instances[i].element.remove();
+                    instances.splice(i, 1);
+                    i--;
                 }
             }
             confettiPreviousTime = Date.now();
