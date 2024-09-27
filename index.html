@@ -17,8 +17,14 @@
 </head>
 <body>
     <div id = 'movieHolder'>
-        <h2>Movies</h2>
+        <div>
+            <h2>Movies</h2>
+        </div>
         <div id = 'movieList'>
+        </div>
+        <div>
+            <div onclick = 'setDaily()' style = 'background-color: var(--lighterBackgroundColor)'>Daily</div>
+            <div onclick = 'setUnlimited()'>Unlimited</div>
         </div>
     </div>
     <div id = 'otherSide'>
@@ -104,10 +110,11 @@
     
 
 
-    <script src='script.js'></script>
     <script src='Scripts/eventListeners.js'></script>
     <script src="Scripts/formatFunctions.js"></script>
     <script src="Scripts/animationFunctions.js"></script>
     <script src="Classes/confetti.js"></script>
+    <script src="Classes/Random.js"></script>
+    <script src='script.js'></script>
 </body>
 </html>

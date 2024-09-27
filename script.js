@@ -32,7 +32,8 @@ let movies = {
     "The Dark Knight": {},
     "Inception": {},
     "The Dark Knight Rises": {},
-    "Batman Begins": {}
+    "Batman Begins": {},
+    "Ocean's Eleven": {}
 }
 let movieStatsDropdown = document.getElementById('movieStatsDropdown');
 let gamemodeDropdown = document.getElementById('gamemodeDropdown');
@@ -374,10 +375,19 @@ let setQuote = () => {
 
 let newNormal = (movie = currentMovie) => {
     gamemode = 'normal';
-    randomIndex = Math.floor(Math.random()*movies[movie].lines.length);
-    randomLine = movies[movie].lines[randomIndex];
-    currentMovie = movie;
-    setQuote();
+    if(movie == 'Daily') {
+        const seed = Math.floor((new Date() - new Date('1970-01-01')) / (1000 * 60 * 60 * 24));
+        let num = Random.random(seed);
+        currentMovie = ['Batman Begins', 'The Dark Knight', 'The Dark Knight Rises'][num%3];
+        let maxNum = movies[currentMovie].lines.length;
+        randomIndex = num%maxNum;
+        randomLine = movies[movie].lines[randomIndex];
+    } else {
+        randomIndex = Math.floor(Math.random()*movies[movie].lines.length);
+        randomLine = movies[movie].lines[randomIndex];
+        currentMovie = movie;
+        setQuote();
+    }
 }
 
 let newQuiz = (movie = currentMovie) => {
@@ -661,4 +671,29 @@ let promptForSave = (mode, movie = currentMovie) => {
         document.querySelector('#finishDiv > .yesOrNo > div:nth-child(1)').removeEventListener('click', yesHandler);
         document.querySelector('#finishDiv > .yesOrNo > div:nth-child(2)').removeEventListener('click', noHandler);
     }
+}
+
+let setDaily = () => {
+    document.querySelector('#movieHolder > div:nth-child(3) > div:nth-child(1)').style.backgroundColor = 'var(--lighterBackgroundColor)';
+    document.querySelector('#movieHolder > div:nth-child(3) > div:nth-child(2)').style.backgroundColor = 'var(--backgroundColor)';
+    document.querySelectorAll('#movieHolder > div:nth-child(2) > div').forEach(div => {
+        if(!['The Dark Knight', 'Batman Begins', 'The Dark Knight Rises'].includes(div.innerHTML.substring('<h3 class="movieName">'.length, div.innerHTML.indexOf('</h3>')))) {
+            div.style.display = 'none';
+        }
+    });
+    document.querySelector('#movieHolder > div:nth-child(1) > h2').innerHTML = 'Select the movie';
+    newNormal();
+}
+
+let setUnlimited = () => {
+    document.querySelector('#movieHolder > div:nth-child(3) > div:nth-child(2)').style.backgroundColor = 'var(--lighterBackgroundColor)';
+    document.querySelector('#movieHolder > div:nth-child(3) > div:nth-child(1)').style.backgroundColor = 'var(--backgroundColor)';
+    document.querySelectorAll('#movieHolder > div:nth-child(2) > div').forEach(div => {
+        div.style.display = 'flex';
+    });
+    document.querySelector('#movieHolder > div:nth-child(1) > h2').innerHTML = "Movies";
+}
+
+for(let i = 0; i < 100; i++) {
+    console.log(Random.random(i));
 }
